@@ -1,3 +1,85 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": ["next/core-web-vitals","eslint:recommended",
+  "plugin:react/recommended",
+  "plugin:@typescript-eslint/recommended",
+  "prettier"]
+  ,
+  "rules": {
+    "react/jsx-no-duplicate-props": [1, { "ignoreCase": true }],
+    "react/jsx-no-undef": 1,
+    "react/jsx-pascal-case": [
+      1,
+      {
+        "allowAllCaps": true,
+        "ignore": []
+      }
+    ],
+    "react/jsx-uses-react": 2,
+    "react/jsx-uses-vars": 1,
+    "react/no-deprecated": 1,
+    "react/react-in-jsx-scope": 0,
+    "react/jsx-no-useless-fragment": 1,
+    "react/self-closing-comp": ["error"],
+    "react/jsx-sort-props": [
+      2,
+      {
+        "noSortAlphabetically": true,
+        "reservedFirst": true,
+        "callbacksLast": true,
+        "ignoreCase": false
+      }
+    ],
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-explicit-any": 1,
+    "@typescript-eslint/no-non-null-assertion": 0,
+    "@typescript-eslint/no-var-requires": 0,
+    "@typescript-eslint/no-unused-vars": [
+      2,
+      {
+        "args": "after-used",
+        "ignoreRestSiblings": false,
+        "argsIgnorePattern": "^_"
+      }
+    ],
+    "no-debugger": 2,
+    "no-console": [
+      2,
+      {
+        "allow": ["warn", "error"]
+      }
+    ],
+    "no-var": 1,
+    "import/no-extraneous-dependencies": "off",
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "internal", ["parent", "sibling"]],
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["react"],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ],
+    "no-restricted-syntax": [
+      "error",
+      "ExportDefaultDeclaration"
+      // {
+      //   selector: "ExportDefaultDeclaration",
+      //   message: "Exporting a default export is not supported. Use named export instead.",
+      //   ignorePatterns: "vite.config.ts",
+      // },
+    ],
+    "no-await-in-loop": 1,
+    "no-duplicate-imports": 2
+  }
+  
 }
