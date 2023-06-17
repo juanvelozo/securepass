@@ -1,9 +1,11 @@
 {
-  "extends": ["next/core-web-vitals","eslint:recommended",
-  "plugin:react/recommended",
-  "plugin:@typescript-eslint/recommended",
-  "prettier"]
-  ,
+  "extends": [
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "plugin:prettier/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
   "rules": {
     "react/jsx-no-duplicate-props": [1, { "ignoreCase": true }],
     "react/jsx-no-undef": 1,
@@ -81,5 +83,4 @@
     "no-await-in-loop": 1,
     "no-duplicate-imports": 2
   }
-  
 }
