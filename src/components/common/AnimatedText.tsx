@@ -66,7 +66,11 @@ const WavyText = ({
           key={index}
           variants={child}
           // SELECTS THE WORDS THAT YOU WANT TO HIGHLIGHT
-          className={index > 9 && index < 13 ? "text-[#4610F9] medium-font font-extrabold" : " regular-font"}
+          className={
+            index > 9 && index < 13
+              ? 'text-[#4610F9] medium-font font-extrabold'
+              : ' regular-font'
+          }
         >
           {word}
         </motion.span>
