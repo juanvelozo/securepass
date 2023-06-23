@@ -1,4 +1,5 @@
 import WavyText from '@/components/common/AnimatedText'
+import PasswordInput from '@/components/input/PasswordInput'
 import ProgressBar from '@/components/common/ProgressBar'
 import { CharTypeEnum, charArray, charsLabels } from '@/helpers/chartypes/char.types'
 import { PasswordFilters } from '@/helpers/filters/passwordFilters.type'
@@ -11,6 +12,8 @@ import {
 import { randomizePassword } from '@/util/randomizeString'
 import { Inter } from 'next/font/google'
 import { useCallback, useEffect, useState } from 'react'
+import { RangeSlider } from '@/components/input/RangeSlider'
+import { copyToClipboard } from '@/util/copyToClipboard'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -36,23 +39,33 @@ export default function Home() {
   })
 // consts
 const halfIndex = Math.floor(charArray.length / 2);
-const visibleItems = advanceSetup ?charArray : charArray.slice(0, halfIndex)  ;
+const visibleItems = advanceSetup ?charArray : charArray.slice(0, halfIndex);
+const advancedItems = charArray.slice(halfIndex)
 // functions
 const handleUpdateCharFilter = useCallback((key: keyof PasswordFilters) => {
   setCharFilter(prevState => ({
     ...prevState,
     [key]: !prevState[key],
-  }));
-}, [setCharFilter]);
+  }))
+}, [setCharFilter, charFilter]);
 
 function generatePassword (){
   const securePassword = randomizePassword({ filters: charFilter, length: passwordLength })
   setPassword(securePassword)
+setPasswordQuality(
+  passwordLength < 20 ? PasswordQualityEnum.WEAK :
+  passwordLength < 40 ? PasswordQualityEnum.POOR :
+  passwordLength < 60 ? PasswordQualityEnum.GOOD :
+  passwordLength < 80 ? PasswordQualityEnum.STRONG :
+  PasswordQualityEnum.GODLIKE
+);
+
+
 }
   // effects
   useEffect(() => {
     generatePassword()
-  }, [])
+  }, [passwordLength,charFilter, passworkQuality])
 
   useEffect(() => {
     const allFiltersFalse = Object.values(charFilter).every(value => value === false)
@@ -65,6 +78,21 @@ function generatePassword (){
       })
     }
   }, [charFilter])
+  
+  useEffect(() => {
+    if (!advanceSetup) {
+      advancedItems.forEach(el => {
+        if (charFilter[el.name as keyof PasswordFilters]) {
+          setCharFilter(prev => ({
+            ...prev,
+            [el.name]: false
+          }))
+        }
+      })
+      generatePassword()
+    }
+  }, [advanceSetup])
+  
 
   //render
   return (
@@ -74,13 +102,11 @@ function generatePassword (){
       <WavyText text="Secure password generator" />
       <div className="w-full p-10 flex gap-5">
         <div className="w-full">
-          <input
-            type="text"
-            value={password}
+          <PasswordInput
+            password={password!}
             onChange={({ currentTarget: { value } }) => {
               setPassword(value)
             }}
-            className="bg-gray-50 text-black p-2 rounded-t-xl w-full"
             placeholder="name@flowbite.com"
           />
           <ProgressBar
@@ -89,6 +115,13 @@ function generatePassword (){
           />
           <p>Seguridad: {PasswordQualityLabel[passworkQuality]}</p>
         </div>
+        <button
+          onClick={() =>
+            copyToClipboard(password!)
+          }
+        >
+          copy
+        </button>
         <button
           onClick={() =>
             generatePassword()
@@ -103,17 +136,17 @@ function generatePassword (){
           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
             Tamaño contraseña {passwordLength}
           </label>
-          <input
-            type="range"
-            defaultValue={10}
-            min={10}
-            max={100}
-            className="w-full"
-            step={1}
+          <RangeSlider
+            defaultValue={passwordLength}
             onChange={({ currentTarget: { value } }) => {
               setPasswordLength(Number(value))
               generatePassword()
             }}
+            onInput={({ currentTarget: { value } }) =>
+   { setPasswordLength(Number(value))
+    generatePassword()}
+  }
+
           />
         </div>
         <button onClick={() => setAdvanceSetup(!advanceSetup)}>
@@ -125,9 +158,9 @@ function generatePassword (){
               <button
                 key={i}
                 className={`border-2 border-white rounded-lg px-2 py-1 ${charFilter[el.name as keyof PasswordFilters] ? 'bg-white text-black':'text-white'}`}
-                onClick={() => {handleUpdateCharFilter(el.name as keyof PasswordFilters)
-                  generatePassword()
-}}             
+                onClick={() => {
+                  handleUpdateCharFilter(el.name as keyof PasswordFilters)}}
+                           
               >
                 {charsLabels[el.name as CharTypeEnum]}
               </button>

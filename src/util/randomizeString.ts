@@ -1,4 +1,4 @@
-import { dashSlash, extendedASCII, keys, lowercaseChars, mathSymbols, numbers, punctuation, quotation, symbols, uppercaseChars } from "@/helpers/chartypes/char.types";
+import { dashSlash, keys, lowercaseChars, mathSymbols, numbers, punctuation, quotation, symbols, uppercaseChars } from "@/helpers/chartypes/char.types";
 import { PasswordFilters } from "@/helpers/filters/passwordFilters.type";
 
 export function randomizePassword({filters,length}:IRandomPass) {
@@ -7,7 +7,6 @@ export function randomizePassword({filters,length}:IRandomPass) {
         ...(filters.MINUS ? lowercaseChars : []),
         ...(filters.MAYUS ? uppercaseChars : []),
         ...(filters.LOGOGRAM ? symbols : []),
-        ...(filters.ASCII ? extendedASCII : []),
         ...(filters.DASHSLASH ? dashSlash : []),
         ...(filters.KEYS ? keys : []),
         ...(filters.MATH ? mathSymbols : []),

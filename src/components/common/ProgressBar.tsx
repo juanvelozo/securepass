@@ -15,7 +15,7 @@ const ProgressBar = ({ bgcolor, completed }: Props) => {
   }
 
   return (
-    <div className="w-[100%] h-2 bg-white rounded-b-full m-0">
+    <div className="w-[100%] h-4 bg-white rounded-b-full m-0">
       <div
         style={fillerStyles}
         className={completed > 80 ? 'rounded-b-full' : 'rounded-bl-full'}
