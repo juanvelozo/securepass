@@ -1,5 +1,6 @@
-export function copyToClipboard(string:string) {
-  navigator.clipboard.writeText(string)
+export function copyToClipboard(string: string) {
+  navigator.clipboard
+    .writeText(string)
     .then(() => {
       console.log('Copied to clipboard: ' + string)
     })
