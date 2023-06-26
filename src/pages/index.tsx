@@ -45,22 +45,19 @@ export default function Home() {
     setPassword(securePassword)
   }
 
-
-
   // effects
   useEffect(() => {
     generatePassword()
   }, [passwordLength, charFilter])
 
   useEffect(() => {
-
     const allFiltersFalse = Object.values(charFilter).every(
       value => value === false
     )
 
     if (allFiltersFalse) {
       alert(
-        'Debe haber al menos un filtro para que se muestre una contraseña segura'
+        'There must be at least one filter for a strong password to be displayed.'
       )
       setCharFilter(initialCharFilterState);
     }
@@ -76,7 +73,18 @@ export default function Home() {
           }))
         }
       })
-      generatePassword()
+      let isChanged = false;
+
+      for (let i = 0; i < advancedItems.length; i++) {
+        if (advancedItems[i] !== charArray[halfIndex + i]) {
+          isChanged = true;
+          break;
+        }
+      }
+      
+      if (isChanged) {
+        generatePassword()
+      } 
     }
   }, [advanceSetup])
 
@@ -86,27 +94,26 @@ export default function Home() {
       className={`flex min-h-screen flex-col w-full items-center  ${inter.className}`}
     >
       <Window>
-        <div className="w-full p-10 flex gap-5">
-          <div className="w-full">
+        <div className="w-full p-10 space-y-2">
+          <div className="w-full ">
             <PasswordInput
               password={password!}
               onChange={({ currentTarget: { value } }) => {
                 setPassword(value)
               }}
             />
-            <div className='flex items-center my-2 gap-3'>
-
-
           </div>
-          </div>
-          <button onClick={() => copyToClipboard(password!)}>copy</button>
-          <button onClick={() => generatePassword()}>reload</button>
-        </div>
+                <div className="w-full flex justify-between">
+          <button className="border-2 text-white border-white rounded-lg px-2 py-1  bg-gray-400 w-full"
+               onClick={() => copyToClipboard(password!)}>Copy to clipboard</button>
+          <button className="border-2 text-white border-white rounded-lg px-2 py-1  bg-gray-400 w-full" onClick={() => generatePassword()}>Create another password</button>
+               </div>
 
+               </div>
         <div className="w-full p-10 ">
           <div className="flex flex-col">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-              Tamaño contraseña {passwordLength}
+            <label className="block mb-2 text-sm font-medium text-gray-900">
+              Password length: {passwordLength} characters.
             </label>
             <RangeSlider
               defaultValue={passwordLength}
@@ -120,11 +127,18 @@ export default function Home() {
               }}
             />
           </div>
-          <button onClick={() => setAdvanceSetup(!advanceSetup)}>
-            advanced filters
-          </button>
         </div>
-        <div className="w-full p-10 space-x-2 space-y-2">
+        <div className="w-full px-10">
+          <button className={`border-2 text-white border-white rounded-lg px-2 py-1  ${
+                advanceSetup
+                  ? 'bg-green-400 border'
+                  : 'bg-gray-400'
+              }`} onClick={() => setAdvanceSetup(!advanceSetup)}>
+            Show advanced filters
+          </button>
+
+        </div>
+        <div className="w-full p-10 gap-2 flex flex-wrap">
           {visibleItems.map((el, i) => (
             <button
               key={i}
@@ -132,7 +146,7 @@ export default function Home() {
                 charFilter[el.name as keyof PasswordFilters]
                   ? 'bg-gray-400 border'
                   : 'bg-gray-200'
-              }`}
+              } whitespace-nowrap`}
               onClick={() => {
                 handleUpdateCharFilter(el.name as keyof PasswordFilters)
               }}

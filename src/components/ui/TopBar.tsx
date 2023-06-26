@@ -1,7 +1,8 @@
-// import Image from 'next/image'
-
-import { LanguageSwitch } from "../lang/LanguageSwitcher"
-
+// import { LanguageSwitch } from "../lang/LanguageSwitcher"
+/**
+ * 
+ * @todo Add language switch with i18next support 
+ */
 export const Topbar = (): JSX.Element => {
   return (
     <div className="bg-gray-200 h-10 flex justify-between items-center absolute w-full select-none rounded-t-xl">
@@ -9,7 +10,7 @@ export const Topbar = (): JSX.Element => {
         Secure Password Generator
       </span>
       <div className="h-full min-w-[28px] flex justify-center items-center rounded-tr-lg overflow-clip">
-            <LanguageSwitch/>
+            {/* <LanguageSwitch/> */}
         <a
           href="https://github.com/juanvelozo/securepass"
           target="_blank"
