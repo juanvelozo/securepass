@@ -11,6 +11,7 @@ const PasswordInput = ({
   return (
     <input
       type="text"
+      id="passwordinput"
       value={password}
       onChange={onChange}
       className="bg-gray-900 p-5 text-2xl tracking-[.1em] rounded-xl w-full text-white ring-0 select-none"

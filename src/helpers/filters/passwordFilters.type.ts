@@ -3,7 +3,6 @@ export type CharType =
   | 'MINUS'
   | 'NUMBER'
   | 'LOGOGRAM'
-  | 'ASCII'
   | 'PUNCTUATION'
   | 'QUOTATION'
   | 'DASHSLASH'
@@ -15,10 +14,20 @@ export interface PasswordFilters {
   MINUS: boolean
   NUMBER: boolean
   LOGOGRAM: boolean
-  ASCII: boolean
   PUNCTUATION: boolean
   QUOTATION: boolean
   DASHSLASH: boolean
   MATH: boolean
   KEYS: boolean
 }
+export const initialCharFilterState:PasswordFilters = {
+  DASHSLASH: false,
+  KEYS: false,
+  LOGOGRAM: true,
+  MATH: false,
+  MAYUS: true,
+  MINUS: true,
+  NUMBER: true,
+  PUNCTUATION: false,
+  QUOTATION: false,
+};

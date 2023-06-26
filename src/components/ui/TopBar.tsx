@@ -9,7 +9,7 @@ export const Topbar = (): JSX.Element => {
         Secure Password Generator
       </span>
       <div className="h-full min-w-[28px] flex justify-center items-center rounded-tr-lg overflow-clip">
-<LanguageSwitch/>
+            <LanguageSwitch/>
         <a
           href="https://github.com/juanvelozo/securepass"
           target="_blank"
