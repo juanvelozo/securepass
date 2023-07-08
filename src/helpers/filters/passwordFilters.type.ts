@@ -20,7 +20,7 @@ export interface PasswordFilters {
   MATH: boolean
   KEYS: boolean
 }
-export const initialCharFilterState:PasswordFilters = {
+export const initialCharFilterState: PasswordFilters = {
   DASHSLASH: false,
   KEYS: false,
   LOGOGRAM: true,
@@ -30,4 +30,4 @@ export const initialCharFilterState:PasswordFilters = {
   NUMBER: true,
   PUNCTUATION: false,
   QUOTATION: false,
-};
+}

@@ -10,10 +10,12 @@ export const Window = ({ children }: IProps): JSX.Element => {
 
   return (
     <div
-      className={`h-[60vh] m-auto p-auto w-[60vw] ${inter.className} rounded-xl relative bg-white text-black`}
+      className={`h-[90vh] m-auto p-auto w-[90vw] ${inter.className} rounded-xl relative bg-gray-100 text-black`}
     >
       <Topbar />
-      <div className="p-4 m-auto h-[100%] w-[95%]">{children}</div>
+      <div className="px-4 py-14 m-auto h-[100%] w-[100%] space-y-10 flex">
+        {children}
+      </div>
     </div>
   )
 }

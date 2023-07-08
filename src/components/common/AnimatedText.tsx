@@ -1,21 +1,23 @@
-import { motion } from 'framer-motion'
+import { Variants, motion } from 'framer-motion'
 
 interface IProps {
   delay?: number
   duration?: number
   replay?: boolean
   text: string
+  className?: string
 }
 
 const WavyText = ({
-  delay = 0.5,
-  duration = 0.025,
+  delay = 0.2,
+  duration = 0.0224,
   replay = false,
   text,
+  className,
 }: IProps) => {
   const wordsArray = text.split(' ')
 
-  const container = {
+  const container: Variants | undefined = {
     hidden: {
       opacity: 0,
     },
@@ -25,10 +27,11 @@ const WavyText = ({
     }),
   }
 
-  const child = {
+  const child: Variants | undefined = {
     visible: {
       opacity: 1,
       x: 0,
+      y: 0,
       transition: {
         type: 'spring',
         damping: 16,
@@ -38,6 +41,7 @@ const WavyText = ({
     hidden: {
       opacity: 0,
       x: 20,
+      y: 20,
       transition: {
         type: 'spring',
         damping: 16,
@@ -48,30 +52,13 @@ const WavyText = ({
 
   return (
     <motion.p
-      style={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        overflow: 'hidden',
-        fontSize: '32px',
-        color: '#fff',
-        gap: '4px',
-      }}
       variants={container}
       initial="hidden"
-      className="select-none"
+      className={`select-none flex text-2xl overflow-hidden gap-1 ${className}`}
       animate={replay ? 'visible' : 'hidden'}
     >
       {wordsArray.map((word, index) => (
-        <motion.span
-          key={index}
-          variants={child}
-          // SELECTS THE WORDS THAT YOU WANT TO HIGHLIGHT
-          className={
-            index > 9 && index < 13
-              ? 'text-[#4610F9] medium-font font-extrabold'
-              : ' regular-font'
-          }
-        >
+        <motion.span key={index} variants={child}>
           {word}
         </motion.span>
       ))}
