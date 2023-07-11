@@ -1,11 +1,6 @@
-import {
-  AnimatePresence,
-  Variant,
-  VariantLabels,
-  Variants,
-  motion,
-} from 'framer-motion'
+import { AnimatePresence, Variant, Variants, motion } from 'framer-motion'
 import { MouseEventHandler, ReactNode, useState } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 export const ToggleButton = ({
   label,
@@ -16,6 +11,7 @@ export const ToggleButton = ({
   isInteractive = false,
   onInteractedLabel,
   fullWidth = false,
+  className,
 }: IToggleButton): JSX.Element => {
   //states
   const [interacted, setInteracted] = useState<boolean>(false)
@@ -24,9 +20,11 @@ export const ToggleButton = ({
   const container: Variants | undefined = {
     hidden: {
       scale: 0,
+      opacity: 0,
     },
     visible: (i = 1) => ({
       scale: 1,
+      opacity: 1,
       transition: { staggerChildren: 0.0224, delayChildren: i * 0.2 },
     }),
   }
@@ -44,30 +42,34 @@ export const ToggleButton = ({
   }
 
   //functions
-  function copyAction(e: any) {
+  function handleAction(e: any) {
     onClick(e)
     if (isInteractive) {
       setInteracted(true)
       setTimeout(() => {
         setInteracted(false)
-      }, 500)
+      }, 1000)
     }
   }
   //render
   return (
-    <AnimatePresence>
+    <AnimatePresence initial={false}>
       <motion.button
         variants={container}
         disabled={interacted}
         whileTap={{ scale: 0.9 }}
+        whileHover={{ opacity: 0.9 }}
         animate={isInteractive ? animateInteractive : animate}
-        className={`${textColor} rounded-lg px-2 py-1 ${
-          fullWidth ? 'w-full' : 'w-min'
-        } truncate flex justify-center gap-2 items-center`}
-        onClick={copyAction}
+        className={twMerge(
+          `${textColor} rounded-lg px-2 py-1 ${
+            fullWidth ? 'w-full' : 'w-min'
+          } truncate flex justify-center gap-2 items-center`,
+          className
+        )}
+        onClick={handleAction}
         transition={{ duration: 0.165 }}
-        initial={{ scale: 0 }}
-        exit={{ scale: 0 }}
+        initial={{ scale: 0, opacity: 0 }}
+        exit={{ scale: 0, opacity: 0 }}
       >
         {interacted ? onInteractedLabel : label}
       </motion.button>
@@ -85,6 +87,6 @@ interface IToggleButton {
     on?: string
     off?: string
   }
-
+  className?: string
   textColor?: string
 }

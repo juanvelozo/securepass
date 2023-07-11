@@ -11,8 +11,10 @@ import { Window } from '@/components/ui/Window'
 import { FilterButtons } from '@/components/buttons/FilterButtons'
 import { PasswordInput } from '@/components/input/PasswordInput'
 import { ToggleButton } from '@/components/buttons/ToggleButton'
-import WavyText from '@/components/common/AnimatedText'
 import { copyToClipboard } from '@/util/copyToClipboard'
+import { SecurityCarrousel } from '@/components/ui/SecurityCarousel'
+import { PasswordLength } from '@/components/ui/PasswordLength'
+import AnimatedTabs from '@/components/lang/LanguageSwitcher'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -95,49 +97,35 @@ export default function Home() {
   //render
   return (
     <main
-      className={`flex min-h-screen flex-col w-full items-center  ${inter.className}`}
+      className={`flex min-h-screen flex-col w-full items-center bg-[#151515]`}
     >
       <Window>
-        <div className="w-[50%] space-y-4">
-          <div className="w-full space-y-2">
-            <div className="w-full ">
-              <PasswordInput
-                password={password!}
-                onChange={({
-                  currentTarget: { value },
-                }: ChangeEvent<HTMLInputElement>) => {
-                  if (value.length !== passwordLength) {
-                    setPassword(prev => {
-                      if (prev !== value) return value
-                    })
-                    setPasswordLength(value.length)
-                  }
-                  setPassword(value)
-                }}
-              />
-            </div>
-            <div className="w-full flex gap-2 justify-between">
-              <ToggleButton
-                label="Copy to clipboard"
-                onClick={() => copyToClipboard(password!)}
-                isInteractive
-                onInteractedLabel="Copied"
-                fullWidth
-              />
-              <ToggleButton
-                label="Create another password"
-                onClick={generatePassword}
-                isInteractive
-                onInteractedLabel="Secure password created!"
-                fullWidth
-              />
-            </div>
+        <div className="w-full h-[50%] ">
+          <div className="w-full my-10">
+            <ToggleButton
+              className="rounded-none"
+              label={
+                advanceSetup
+                  ? 'hide advanced filter (reset the password if you applied an advanced filter)'
+                  : 'show advanced filter'
+              }
+              toggled={advanceSetup}
+              onClick={() => setAdvanceSetup(!advanceSetup)}
+              backgroundColor={{
+                off: 'rgb(75 85 99)',
+                on: 'rgb(74 122 128)',
+              }}
+              fullWidth
+            />
+            <FilterButtons
+              charFilter={charFilter}
+              items={visibleItems}
+              onClick={handleUpdateCharFilter}
+            />
           </div>
-          <div className="w-full">
-            <div className="flex flex-col">
-              <label className="block mb-2 text-2xl text-center font-light text-gray-900">
-                Password length: {passwordLength} characters
-              </label>
+          <div className="w-full flex">
+            <div>
+              <PasswordLength passwordLength={passwordLength} />
               <RangeSlider
                 value={passwordLength}
                 onChange={({ currentTarget: { value } }) => {
@@ -150,64 +138,58 @@ export default function Home() {
                 }}
               />
             </div>
-          </div>
-          <div className="w-full space-y-2">
-            <div className="flex">
-              <ToggleButton
-                label={
-                  advanceSetup ? 'Hide advanced filter' : 'Show advanced filter'
+            <PasswordInput
+              password={password!}
+              onChange={({
+                currentTarget: { value },
+              }: ChangeEvent<HTMLInputElement>) => {
+                if (value.length !== passwordLength) {
+                  setPassword(prev => {
+                    if (prev !== value) return value
+                  })
+                  setPasswordLength(value.length)
                 }
-                toggled={advanceSetup}
-                onClick={() => setAdvanceSetup(!advanceSetup)}
-                backgroundColor={{
-                  off: 'rgb(75 85 99)',
-                  on: 'rgb(74 222 128)',
-                }}
-              />
-              <WavyText
-                className="text-xs p-2 text-gray-600"
-                text="(Hide the advanced filters will regenerate the password with the standards filters values.)"
-                replay={advanceSetup}
-              />
-            </div>
-            <FilterButtons
-              charFilter={charFilter}
-              items={visibleItems}
-              onClick={handleUpdateCharFilter}
+                setPassword(value)
+              }}
+            />
+          </div>
+          <div className="w-full flex justify-between">
+            <ToggleButton
+              label="Copy to clipboard"
+              onClick={() => copyToClipboard(password!)}
+              isInteractive
+              onInteractedLabel="Copied"
+              fullWidth
+              backgroundColor={{
+                off: 'transparent',
+                on: 'rgb(70 142 38)',
+              }}
+              className={`rounded-none text-base lowercase  whitespace-normal border`}
+            />
+            <ToggleButton
+              label="Create another password"
+              onClick={generatePassword}
+              isInteractive
+              onInteractedLabel="Secure password created!"
+              fullWidth
+              backgroundColor={{
+                off: 'transparent',
+                on: 'rgb(70 142 38)',
+              }}
+              className={`rounded-none text-base lowercase  whitespace-normal border`}
             />
           </div>
         </div>
-        <div className="w-[50%] space-y-4">
-          <h1 className='text-center text-3xl'>Why you should have a secure password?</h1>
-          <ul className="list-none p-0 m-2">
-            <li className="flex items-center p-4 border-b border-gray-300">
-              <div className="w-10 h-10 bg-gray-200 rounded-lg flex items-center justify-center">🔐</div>
-              <div className="ml-4">
-                <h4 className="font-bold mb-0">Avoid hackers</h4>
-                <p className="text-sm text-gray-600 m-0">
-                  Description of item 1
-                </p>
-              </div>
-            </li>
-            <li className="flex items-center p-4 border-b border-gray-300">
-              <div className="w-10 h-10 bg-gray-200 rounded-lg"></div>
-              <div className="ml-4">
-                <h4 className="font-bold mb-0">Item 2</h4>
-                <p className="text-sm text-gray-600 m-0">
-                  Description of item 2
-                </p>
-              </div>
-            </li>
-            <li className="flex items-center p-4 border-b border-gray-300">
-              <div className="w-10 h-10 bg-gray-200 rounded-lg"></div>
-              <div className="ml-4">
-                <h4 className="font-bold mb-0">Item 3</h4>
-                <p className="text-sm text-gray-600 m-0">
-                  Description of item 3
-                </p>
-              </div>
-            </li>
-          </ul>
+        <div className="flex justify-between h-[43%]">
+          <div className="w-1/3">
+            <SecurityCarrousel />
+          </div>
+          <div className="w-1/3  text-slate-200 border">
+            <h1 className="text-center  text-lg">Educate yourself</h1>
+          </div>
+          <div className="w-1/3 text-slate-200 border">
+            <h1 className="text-center  text-lg">About me</h1>
+          </div>
         </div>
       </Window>
     </main>

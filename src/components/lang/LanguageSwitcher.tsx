@@ -1,28 +1,38 @@
-/**
- *React component for a language switcher.
- *@description A label with two options for switching languages.
- */
+import { motion } from 'framer-motion'
+import { useState } from 'react'
 
-export const LanguageSwitch = (): JSX.Element => {
-  //States
-  //hooks
-  //functions
-  //DOM
+let tabs = [
+  { id: 'en', label: 'English' },
+  { id: 'es', label: 'Español' },
+]
+
+export default function AnimatedTabs() {
+  let [activeTab, setActiveTab] = useState(tabs[0].id)
 
   return (
-    <label className="inline-flex items-center cursor-pointer dark:text-gray-800">
-      <input
-        id="Toggle3"
-        type="checkbox"
-        className="hidden peer"
-        control-id="ControlID-38"
-      />
-      <span className="p-2 dark:bg-gray-400 peer-checked:dark:bg-gray-300">
-        Español
-      </span>
-      <span className="p-2  dark:bg-gray-300 peer-checked:dark:bg-gray-400">
-        English
-      </span>
-    </label>
+    <div className="flex space-x-1 w-full">
+      {tabs.map(tab => (
+        <button
+          key={tab.id}
+          onClick={() => setActiveTab(tab.id)}
+          className={`relative rounded-none p-1.5 lowercase`}
+        >
+          <span
+            className={`relative z-10 text-sm font-bold ${
+              activeTab === tab.id ? 'text-black' : ' text-white'
+            }`}
+          >
+            {tab.label}
+          </span>
+          {activeTab === tab.id && (
+            <motion.div
+              layoutId="bubble"
+              className="absolute inset-0 z-0 bg-white"
+              transition={{ type: 'spring', bounce: 0.3, duration: 0.6 }}
+            />
+          )}
+        </button>
+      ))}
+    </div>
   )
 }

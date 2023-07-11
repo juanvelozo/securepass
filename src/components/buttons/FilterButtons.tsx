@@ -20,21 +20,23 @@ export const FilterButtons = ({
 
   // render
   return (
-    <div className="w-full gap-2 flex flex-wrap">
+    <div className="w-full flex flex-nowrap justify-start">
       {items.map((el, i) => (
         <ToggleButton
           key={i}
+          className={`rounded-none text-sm h-16 whitespace-normal`}
           onClick={() => {
             handleClick(el.name as keyof PasswordFilters, i)
           }}
           label={charsLabels[el.name as CharTypeEnum]}
           toggled={charFilter[el.name as keyof PasswordFilters]}
-          backgroundColor={{ off: 'rgb(156 163 175)', on: 'rgb(74 222 128)' }}
+          backgroundColor={{ off: 'rgb(10 21 21)', on: 'rgb(70 142 38)' }}
           textColor={
             charFilter[el.name as keyof PasswordFilters]
               ? '#fff'
-              : 'rgb(75 85 99)'
+              : 'rgb(156 163 175)'
           }
+          fullWidth
         />
       ))}
     </div>

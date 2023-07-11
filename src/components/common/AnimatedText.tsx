@@ -1,19 +1,12 @@
 import { Variants, motion } from 'framer-motion'
 
-interface IProps {
-  delay?: number
-  duration?: number
-  replay?: boolean
-  text: string
-  className?: string
-}
-
 const WavyText = ({
   delay = 0.2,
   duration = 0.0224,
   replay = false,
   text,
   className,
+  key,
 }: IProps) => {
   const wordsArray = text.split(' ')
 
@@ -52,6 +45,7 @@ const WavyText = ({
 
   return (
     <motion.p
+      key={key}
       variants={container}
       initial="hidden"
       className={`select-none flex text-2xl overflow-hidden gap-1 ${className}`}
@@ -64,6 +58,14 @@ const WavyText = ({
       ))}
     </motion.p>
   )
+}
+interface IProps {
+  delay?: number
+  duration?: number
+  replay?: boolean
+  text: string
+  className?: string
+  key?: string | number
 }
 
 export default WavyText

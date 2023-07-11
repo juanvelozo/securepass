@@ -15,15 +15,15 @@ type CharactersLabels = {
 }
 
 export const charsLabels: CharactersLabels = {
-  DASHSLASH: 'Dashes & Slashes',
-  KEYS: 'Keys',
-  LOGOGRAM: 'Special characters',
-  MATH: 'Math symbols',
-  MAYUS: 'Capital letter',
-  MINUS: 'Lower case letter',
-  NUMBER: 'Number',
-  PUNCTUATION: 'Punctuation symbols',
-  QUOTATION: 'Quotations symbols',
+  DASHSLASH: 'dashes & slashes',
+  KEYS: 'keys',
+  LOGOGRAM: 'special characters',
+  MATH: 'math symbols',
+  MAYUS: 'capital letter',
+  MINUS: 'lower case letter',
+  NUMBER: 'number',
+  PUNCTUATION: 'punctuation symbols',
+  QUOTATION: 'quotations symbols',
 }
 
 export const charArray = Object.keys(CharTypeEnum).map(name => {

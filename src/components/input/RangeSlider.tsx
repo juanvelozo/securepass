@@ -8,14 +8,5 @@ export const RangeSlider = ({
   //functions
   //DOM
 
-  return (
-    <input
-      {...props}
-      type="range"
-      min={10}
-      max={100}
-      className="w-full"
-      step={1}
-    />
-  )
+  return <input {...props} type="range" min={10} max={100} step={1} />
 }

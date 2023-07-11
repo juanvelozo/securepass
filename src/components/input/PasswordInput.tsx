@@ -1,5 +1,6 @@
 import { ChangeEvent, useState } from 'react'
 import { Variant, motion } from 'framer-motion'
+import { Cutive_Mono } from 'next/font/google'
 export const PasswordInput = ({
   password,
   onChange,
@@ -30,8 +31,9 @@ export const PasswordInput = ({
       exit={animate}
       type="text"
       value={password}
+      disabled
       onChange={handleChange}
-      className="bg-gray-900 p-5 text-2xl tracking-[.1em] rounded-xl w-full ring-0 select-none relative"
+      className={`bg-transparent target:ring-0 border text-4xl text-center tracking-[.1em] w-full ring-0 select-none relative ${font.className} px-10`}
       placeholder={placeholder}
       maxLength={100}
     />
@@ -43,3 +45,4 @@ interface PasswordInputProps {
   onChange: (event: ChangeEvent<HTMLInputElement>) => void
   placeholder?: string
 }
+const font = Cutive_Mono({ weight: '400', subsets: ['latin'] })
