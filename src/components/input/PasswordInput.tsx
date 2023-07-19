@@ -1,39 +1,24 @@
-import { ChangeEvent, useState } from 'react'
-import { Variant, motion } from 'framer-motion'
+import { ChangeEvent } from 'react'
 import { Cutive_Mono } from 'next/font/google'
+
 export const PasswordInput = ({
   password,
   onChange,
   placeholder,
 }: PasswordInputProps) => {
   // states
-  const [isChanged, setIsChanged] = useState<boolean>(true)
   // constants
-  const animate: Variant = {
-    color: isChanged ? '#fff' : 'transparent',
-    textLength: isChanged ? 1 : 0,
-    fontSize: isChanged ? 24 : 0,
-  }
 
   // functions
-  function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    setIsChanged(true)
-    onChange(event)
-    setTimeout(() => {
-      setIsChanged(false)
-    }, 1000)
-  }
+
   // render
   return (
-    <motion.input
-      animate={animate}
-      initial={{ color: 'transparent' }}
-      exit={animate}
+    <input
       type="text"
       value={password}
       disabled
-      onChange={handleChange}
-      className={`bg-transparent target:ring-0 border text-4xl text-center tracking-[.1em] w-full ring-0 select-none relative ${font.className} px-10`}
+      onChange={onChange}
+      className={`bg-transparent target:ring-0 border text-4xl text-center tracking-[.1em] text-slate-200 w-full ring-0 select-none relative ${font.className} px-10 bg-[#151700] hover:bg-opacity-0`}
       placeholder={placeholder}
       maxLength={100}
     />

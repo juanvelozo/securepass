@@ -1,30 +1,30 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 
-let tabs = [
+let languages = [
   { id: 'en', label: 'English' },
   { id: 'es', label: 'Español' },
 ]
 
-export default function AnimatedTabs() {
-  let [activeTab, setActiveTab] = useState(tabs[0].id)
+export default function LanguageSwitcher() {
+  let [activeTab, setActiveTab] = useState(languages[0].id)
 
   return (
     <div className="flex space-x-1 w-full">
-      {tabs.map(tab => (
+      {languages.map(lang => (
         <button
-          key={tab.id}
-          onClick={() => setActiveTab(tab.id)}
+          key={lang.id}
+          onClick={() => setActiveTab(lang.id)}
           className={`relative rounded-none p-1.5 lowercase`}
         >
           <span
             className={`relative z-10 text-sm font-bold ${
-              activeTab === tab.id ? 'text-black' : ' text-white'
+              activeTab === lang.id ? 'text-black' : ' text-white'
             }`}
           >
-            {tab.label}
+            {lang.label}
           </span>
-          {activeTab === tab.id && (
+          {activeTab === lang.id && (
             <motion.div
               layoutId="bubble"
               className="absolute inset-0 z-0 bg-white"

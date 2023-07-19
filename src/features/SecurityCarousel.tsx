@@ -2,7 +2,7 @@ import { ReactNode, useState } from 'react'
 import { AnimatePresence, motion, MotionConfig } from 'framer-motion'
 import useMeasure from 'react-use-measure'
 import { SecurityArray } from '@/data/Security'
-import WavyText from '../common/AnimatedText'
+import WavyText from '../components/common/AnimatedText'
 
 let duration = 0.5
 
@@ -31,13 +31,13 @@ export const SecurityCarrousel = () => {
       <div className="w-full h-full relative text-center border hover:bg-gray-950/10 transition-all duration-200 ease-in overflow-clip">
         <div className="flex items-center justify-center border-b">
           <span className="text-slate-300 px-2 border-r absolute left-0">
-            {count}
+            {count + 1}
           </span>
           <span className="text-slate-200 text-sm p-3">
             Why do should secure your password?
           </span>
         </div>
-        <div className="flex justify-between  h-full">
+        <div className="flex justify-between h-full">
           <button
             onClick={() => updateCount(count, -1)}
             className="border-r h-full text-slate-200 text-sm font-light px-2"
@@ -48,12 +48,12 @@ export const SecurityCarrousel = () => {
             <WavyText
               key={count}
               replay
-              delay={0.4}
+              delay={0.5}
               text={SecurityArray[count].title}
-              className="text-center text-base font-extralight text-slate-300 mx-auto flex justify-center w-full capitalize py-2 overflow-hidden"
+              className="text-center text-lg font-bold text-white mx-auto flex flex-wrap justify-center capitalize py-5 max-w-[50%] overflow-hidden whitespace-pre-wrap"
             />
 
-            <p className="text-slate-300 text-center text-sm font-medium h-full p-4">
+            <p className="text-white mx-auto font-medium w-full px-10">
               {SecurityArray[count].description}
             </p>
           </ResizablePanel>
@@ -77,11 +77,11 @@ function ResizablePanel({ children }: { children: ReactNode }) {
       animate={{ height: height || 'auto' }}
       className="relative h-full w-full overflow-hidden"
     >
-      <AnimatePresence initial={false} mode="wait">
+      <AnimatePresence mode="wait">
         <motion.div
           key={JSON.stringify(children, ignoreCircularReferences())}
           initial={{
-            x: 500,
+            x: 400,
             opacity: 0,
           }}
           animate={{
@@ -89,12 +89,12 @@ function ResizablePanel({ children }: { children: ReactNode }) {
             opacity: 1,
           }}
           exit={{
-            x: -500,
+            x: -400,
             opacity: 0,
           }}
           className={height ? 'absolute' : 'relative'}
         >
-          <div ref={ref} className="lowercase">
+          <div ref={ref} className="lowercase w-[90%] h-full my-5">
             {children}
           </div>
         </motion.div>

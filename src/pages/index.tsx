@@ -12,16 +12,15 @@ import { FilterButtons } from '@/components/buttons/FilterButtons'
 import { PasswordInput } from '@/components/input/PasswordInput'
 import { ToggleButton } from '@/components/buttons/ToggleButton'
 import { copyToClipboard } from '@/util/copyToClipboard'
-import { SecurityCarrousel } from '@/components/ui/SecurityCarousel'
-import { PasswordLength } from '@/components/ui/PasswordLength'
-import AnimatedTabs from '@/components/lang/LanguageSwitcher'
-
-const inter = Inter({ subsets: ['latin'] })
+import { SecurityCarrousel } from '@/features/SecurityCarousel'
+import { PasswordLength } from '@/features/PasswordLength'
+import { EducateSection } from '@/features/Educate'
+import { About } from '@/features/AboutMe'
 
 export default function Home() {
   //states
   const [password, setPassword] = useState<string | undefined>('')
-  const [passwordLength, setPasswordLength] = useState<number>(20)
+  const [passwordLength, setPasswordLength] = useState<number>(0)
   const [advanceSetup, setAdvanceSetup] = useState<boolean>(false)
   const [charFilter, setCharFilter] = useState<PasswordFilters>(
     initialCharFilterState
@@ -31,7 +30,9 @@ export default function Home() {
   const halfIndex = Math.floor(charArray.length / 2)
   const visibleItems = advanceSetup ? charArray : charArray.slice(0, halfIndex)
   const advancedItems = charArray.slice(halfIndex)
-
+  const isToken = Object.entries(charFilter).every(([key, value]) => {
+    return key === 'NUMBER' ? value === true : value === false
+  })
   // functions
   const handleUpdateCharFilter = useCallback(
     (key: keyof PasswordFilters) => {
@@ -93,6 +94,22 @@ export default function Home() {
       }
     }
   }, [advanceSetup])
+  useEffect(() => {
+    let count = 10
+    setPasswordLength(count)
+    const interval = setInterval(() => {
+      if (count >= 20) {
+        clearInterval(interval)
+      } else {
+        count++
+        setPasswordLength(prevCount => prevCount + 1)
+      }
+    }, 200)
+
+    return () => {
+      clearInterval(interval)
+    }
+  }, [])
 
   //render
   return (
@@ -125,7 +142,10 @@ export default function Home() {
           </div>
           <div className="w-full flex">
             <div>
-              <PasswordLength passwordLength={passwordLength} />
+              <PasswordLength
+                onlyNumbers={isToken}
+                passwordLength={passwordLength}
+              />
               <RangeSlider
                 value={passwordLength}
                 onChange={({ currentTarget: { value } }) => {
@@ -167,7 +187,7 @@ export default function Home() {
               className={`rounded-none text-base lowercase  whitespace-normal border`}
             />
             <ToggleButton
-              label="Create another password"
+              label="Create new password"
               onClick={generatePassword}
               isInteractive
               onInteractedLabel="Secure password created!"
@@ -184,11 +204,11 @@ export default function Home() {
           <div className="w-1/3">
             <SecurityCarrousel />
           </div>
-          <div className="w-1/3  text-slate-200 border">
-            <h1 className="text-center  text-lg">Educate yourself</h1>
+          <div className="w-1/3  ">
+            <EducateSection />
           </div>
-          <div className="w-1/3 text-slate-200 border">
-            <h1 className="text-center  text-lg">About me</h1>
+          <div className="w-1/3">
+            <About />
           </div>
         </div>
       </Window>

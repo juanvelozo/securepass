@@ -1,8 +1,9 @@
 import { useState } from 'react'
-import { AnimatedCounter } from '../common/AnimatedCounter'
+import { AnimatedCounter } from '../components/common/AnimatedCounter'
 
 export const PasswordLength = ({
   passwordLength,
+  onlyNumbers,
 }: IpasswordLength): JSX.Element => {
   //constants
 
@@ -19,7 +20,9 @@ export const PasswordLength = ({
 
   return (
     <div className="text-slate-200 flex flex-col items-center justify-center text-center border-t border-l border-r select-none w-[15rem] p-3">
-      <span className="text-base font-extralight">password length</span>
+      <span className="text-base font-extralight">
+        {onlyNumbers ? 'token' : 'password'} length
+      </span>
 
       <AnimatedCounter value={passwordLength} />
       <span className="font-light text-2xl">characters</span>
@@ -28,4 +31,5 @@ export const PasswordLength = ({
 }
 interface IpasswordLength {
   passwordLength: number
+  onlyNumbers?: boolean
 }
