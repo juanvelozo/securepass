@@ -3,12 +3,14 @@ import { AnimatePresence, motion, MotionConfig } from 'framer-motion'
 import useMeasure from 'react-use-measure'
 import { SecurityArray } from '@/data/Security'
 import WavyText from '../components/common/AnimatedText'
-
+import { useTranslation } from 'next-i18next'
 let duration = 0.5
 
 export const SecurityCarrousel = () => {
   // state
   const [count, setCount] = useState<number>(0)
+  // hooks
+  const { t } = useTranslation()
   // functions
   function updateCount(currentCount: number, increment: number) {
     if (increment === -1 && currentCount === 0) {
@@ -30,11 +32,8 @@ export const SecurityCarrousel = () => {
     <MotionConfig transition={{ duration, type: 'tween' }}>
       <div className="w-full h-full relative text-center border hover:bg-gray-950/10 transition-all duration-200 ease-in overflow-clip">
         <div className="flex items-center justify-center border-b">
-          <span className="text-slate-300 px-2 border-r absolute left-0">
-            {count + 1}
-          </span>
           <span className="text-slate-200 text-sm p-3">
-            Why do should secure your password?
+            {t('securePasswordTitle')}
           </span>
         </div>
         <div className="flex justify-between h-full">
@@ -49,12 +48,12 @@ export const SecurityCarrousel = () => {
               key={count}
               replay
               delay={0.5}
-              text={SecurityArray[count].title}
+              text={count + 1 +"-" +t(SecurityArray[count].title)}
               className="text-center text-lg font-bold text-white mx-auto flex flex-wrap justify-center capitalize py-5 max-w-[50%] overflow-hidden whitespace-pre-wrap"
             />
 
             <p className="text-white mx-auto font-medium w-full px-10">
-              {SecurityArray[count].description}
+              {t(SecurityArray[count].description)}
             </p>
           </ResizablePanel>
           <button

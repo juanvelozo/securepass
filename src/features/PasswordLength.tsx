@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import {useTranslation} from 'next-i18next'
 import { AnimatedCounter } from '../components/common/AnimatedCounter'
 
 export const PasswordLength = ({
@@ -8,10 +8,8 @@ export const PasswordLength = ({
   //constants
 
   //states
-  let [count, setCount] = useState<number>(0)
-
   //hooks
-
+const {t}= useTranslation('common')
   //functions
 
   //effects
@@ -19,13 +17,13 @@ export const PasswordLength = ({
   //render
 
   return (
-    <div className="text-slate-200 flex flex-col items-center justify-center text-center border-t border-l border-r select-none w-[15rem] p-3">
-      <span className="text-base font-extralight">
-        {onlyNumbers ? 'token' : 'password'} length
+    <div className="text-slate-200 flex flex-col items-center justify-center text-center border-t border-l border-r select-none w-[15rem] overflow-clip p-3">
+      <span className="text-sm font-extralight" >
+        {t('passwordOrTokenLength').replace('@', onlyNumbers ? t('token') : t('password'))}
       </span>
 
       <AnimatedCounter value={passwordLength} />
-      <span className="font-light text-2xl">characters</span>
+      <span className="font-light text-2xl">{t('characters')}</span>
     </div>
   )
 }

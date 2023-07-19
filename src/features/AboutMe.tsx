@@ -1,6 +1,7 @@
 import { ContactLinks } from '@/data/ContactLinks'
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { useTranslation } from 'next-i18next'
 
 export const About = (): JSX.Element => {
   //constants
@@ -9,6 +10,7 @@ export const About = (): JSX.Element => {
   let [activeTab, setActiveTab] = useState<number | null>()
 
   //hooks
+  const { t } = useTranslation()
 
   //functions
 
@@ -19,7 +21,7 @@ export const About = (): JSX.Element => {
   return (
     <div className="w-full h-full border hover:bg-gray-950/10 transition-all duration-200 ease-in">
       <div className="text-slate-200 border">
-        <h1 className="text-slate-200 text-sm p-3 text-center">about me</h1>
+        <h1 className="text-slate-200 text-sm p-3 text-center">{t('aboutMeTitle')}</h1>
       </div>
       <div
         className="h-3/4 w-full flex flex-col justify-center items-center space-y-5"
@@ -37,7 +39,9 @@ export const About = (): JSX.Element => {
             >
               <span
                 className={`relative text-end text-4xl z-10 ${
-                  activeTab === i ? 'text-gray-900 capitalize font-light' : 'text-white lowercase font-semibold'
+                  activeTab === i
+                    ? 'text-gray-900 capitalize font-light'
+                    : 'text-white lowercase font-semibold'
                 }`}
               >
                 {el.title}
@@ -46,7 +50,7 @@ export const About = (): JSX.Element => {
                 <motion.div
                   layoutId="linkHover"
                   className="absolute inset-0 z-0 bg-white"
-                  whileHover={{scale: 1.2}}
+                  whileHover={{ scale: 1.2 }}
                   transition={{ type: 'spring', bounce: 0.5, duration: 0.6 }}
                 />
               )}

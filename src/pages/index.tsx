@@ -4,7 +4,6 @@ import {
   initialCharFilterState,
 } from '@/helpers/filters/passwordFilters.type'
 import { randomizePassword } from '@/util/randomizeString'
-import { Inter } from 'next/font/google'
 import { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { RangeSlider } from '@/components/input/RangeSlider'
 import { Window } from '@/components/ui/Window'
@@ -16,8 +15,13 @@ import { SecurityCarrousel } from '@/features/SecurityCarousel'
 import { PasswordLength } from '@/features/PasswordLength'
 import { EducateSection } from '@/features/Educate'
 import { About } from '@/features/AboutMe'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { InferGetStaticPropsType } from 'next'
 
-export default function Home() {
+export default function Home(
+  _props: InferGetStaticPropsType<typeof getStaticProps>
+) {
   //states
   const [password, setPassword] = useState<string | undefined>('')
   const [passwordLength, setPasswordLength] = useState<number>(0)
@@ -25,6 +29,8 @@ export default function Home() {
   const [charFilter, setCharFilter] = useState<PasswordFilters>(
     initialCharFilterState
   )
+  // hooks
+  const { t } = useTranslation('common')
 
   // consts
   const halfIndex = Math.floor(charArray.length / 2)
@@ -120,11 +126,11 @@ export default function Home() {
         <div className="w-full h-[50%] ">
           <div className="w-full my-10">
             <ToggleButton
-              className="rounded-none"
+              className="rounded-none lowercase"
               label={
                 advanceSetup
-                  ? 'hide advanced filter (reset the password if you applied an advanced filter)'
-                  : 'show advanced filter'
+                  ? t('hideFilters')
+                  : t('showFilters')
               }
               toggled={advanceSetup}
               onClick={() => setAdvanceSetup(!advanceSetup)}
@@ -175,10 +181,10 @@ export default function Home() {
           </div>
           <div className="w-full flex justify-between">
             <ToggleButton
-              label="Copy to clipboard"
+              label={t('copyToClipboard')}
               onClick={() => copyToClipboard(password!)}
               isInteractive
-              onInteractedLabel="Copied"
+              onInteractedLabel={t('copied')}
               fullWidth
               backgroundColor={{
                 off: 'transparent',
@@ -187,10 +193,10 @@ export default function Home() {
               className={`rounded-none text-base lowercase  whitespace-normal border`}
             />
             <ToggleButton
-              label="Create new password"
+              label={t("createNewPassword")}
               onClick={generatePassword}
               isInteractive
-              onInteractedLabel="Secure password created!"
+              onInteractedLabel={t("securePasswordCreated")}
               fullWidth
               backgroundColor={{
                 off: 'transparent',
@@ -201,17 +207,24 @@ export default function Home() {
           </div>
         </div>
         <div className="flex justify-between h-[43%]">
-          <div className="w-1/3">
+          <div className="w-2/5">
             <SecurityCarrousel />
           </div>
-          <div className="w-1/3  ">
+          <div className="w-2/5  ">
             <EducateSection />
           </div>
-          <div className="w-1/3">
+          <div className="w-1/5">
             <About />
           </div>
         </div>
       </Window>
     </main>
   )
+}
+export async function getStaticProps({ locale }: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+    },
+  }
 }

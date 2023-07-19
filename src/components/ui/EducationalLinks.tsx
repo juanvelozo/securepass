@@ -1,6 +1,9 @@
 import { LinksArray } from '@/data/Education'
 import { motion } from 'framer-motion'
+
 export const UrlCard = ({ data, reverse }: IUrlCard): JSX.Element => {
+// states
+// constants
   const marqueeVariants = {
     animate: {
       x: reverse ? [-1035, 0] : [0, -1035],
@@ -15,6 +18,10 @@ export const UrlCard = ({ data, reverse }: IUrlCard): JSX.Element => {
     },
   }
 
+
+
+
+// render
   return (
     <a
       href={data.url}
@@ -34,7 +41,7 @@ export const UrlCard = ({ data, reverse }: IUrlCard): JSX.Element => {
       </div>
     </a>
   )
-}
+  }
 interface IUrlCard {
   data: LinksArray
   reverse?: boolean

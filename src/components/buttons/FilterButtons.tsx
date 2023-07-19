@@ -2,14 +2,17 @@ import { CharTypeEnum, charsLabels } from '@/helpers/chartypes/char.types'
 import { PasswordFilters } from '@/helpers/filters/passwordFilters.type'
 import { ToggleButton } from './ToggleButton'
 import { useState } from 'react'
+import {useTranslation} from 'next-i18next'
 
 export const FilterButtons = ({
   items,
   charFilter,
   onClick,
 }: IFilterButtons): JSX.Element => {
+  // states
   const [toggled, setToggled] = useState<boolean>(false)
-
+// hooks
+const {t}= useTranslation('common')
   // functions
   function handleClick(key: keyof PasswordFilters, i: number) {
     onClick(key)
@@ -28,7 +31,7 @@ export const FilterButtons = ({
           onClick={() => {
             handleClick(el.name as keyof PasswordFilters, i)
           }}
-          label={charsLabels[el.name as CharTypeEnum]}
+          label={t(charsLabels[el.name as CharTypeEnum])}
           toggled={charFilter[el.name as keyof PasswordFilters]}
           backgroundColor={{ off: 'rgb(10 21 21)', on: 'rgb(70 142 38)' }}
           textColor={
