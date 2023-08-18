@@ -4,11 +4,11 @@ export const ContactLinks: ContactArray[] = [
     title: 'Twitter',
   },
   {
-    url: 'https://github.com/juanvelozo',
+    url: 'https://github.com/juanvelozo/securepass',
     title: 'Github',
   },
   {
-    url: 'https://twitter.com/juanvelozo_',
+    url: 'https://www.linkedin.com/in/juanvelozo99/',
     title: 'LinkedIn',
   },
   {
