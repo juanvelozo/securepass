@@ -123,7 +123,7 @@ export default function Home(
       className={`flex min-h-screen flex-col w-full items-center bg-[#151515]`}
     >
       <Window>
-        <div className="w-full h-[50%] ">
+        <div className="w-full">
           <div className="w-full my-10">
             <ToggleButton
               className="rounded-none lowercase"
@@ -206,7 +206,7 @@ export default function Home(
             />
           </div>
         </div>
-        <div className="flex justify-between h-[43%]">
+        <div className="flex justify-between">
           <div className="w-2/5">
             <SecurityCarrousel />
           </div>
